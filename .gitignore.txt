@@ -1,0 +1,26 @@
+# Maven target directory
+target/
+
+# IDE-specific files
+.idea/
+.vscode/
+
+# Compiled Java classes
+*.class
+
+# Maven build files
+mvnw
+mvnw.cmd
+.mvn/
+mvn-wrapper.jar
+
+# Application properties (contains sensitive information)
+src/main/resources/application.properties
+src/main/resources/application.yml
+
+# Log files
+*.log
+
+# Gradle-specific files
+gradle/
+build/
