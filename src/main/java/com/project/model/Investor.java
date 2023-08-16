@@ -15,6 +15,7 @@ public class Investor {
 	private String lastName;
 	private String email;
 	private String phone;
+	private String password;
 	private double investment;
 	private Date AOD;
 	public int getInvestor_id() {
@@ -58,6 +59,13 @@ public class Investor {
 	}
 	public void setAOD(Date aOD) {
 		AOD = aOD;
+	}
+	
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	@Override
 	public String toString() {
