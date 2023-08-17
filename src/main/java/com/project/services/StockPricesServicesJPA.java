@@ -19,4 +19,13 @@ public class StockPricesServicesJPA {
 		.forEach( price -> stockPrices.add(price));
 		return stockPrices;
 	}
+	
+	public String addStock(StockPrices Sp) {
+		try {
+			stockRepo.save(Sp);
+			return "Stock added";
+		}catch(Exception e) {
+			return e.getMessage();
+		}
+	}
 }
