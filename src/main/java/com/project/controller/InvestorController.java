@@ -3,7 +3,9 @@ package com.project.controller;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,7 +22,7 @@ public class InvestorController {
 	@Autowired
 	InvestorServiceJPA Is;
 	
-	@RequestMapping(value="/investor", method=RequestMethod.GET)
+	@RequestMapping(value="/investor", method=RequestMethod.GET, produces= {MediaType.APPLICATION_JSON_VALUE})
 	public ArrayList<Investor> getAllInvestors(){
 		return Is.getAllInvestors();
 	}
@@ -40,9 +42,19 @@ public class InvestorController {
 		return Is.investorDel(delData);
 	}
 	
+	@RequestMapping(value="/investor/{id}", method=RequestMethod.DELETE)
+	public String investorDel(@PathVariable("id") int delId) {
+		return Is.investorDelById(delId);
+	}
+	
 	@RequestMapping(value="/investor", method=RequestMethod.PUT)
 	public String investorUpdate(@RequestBody Investor newInvestor) {
 		return Is.investorUpdate(newInvestor);
+	}
+	
+	@RequestMapping(value="/investor/{id}", method=RequestMethod.PUT)
+	public String investorUpdate(@PathVariable("id") int updateId,@RequestBody Investor newInvestor) {
+		return Is.investorUpdateId(updateId, newInvestor);
 	}
 
 }

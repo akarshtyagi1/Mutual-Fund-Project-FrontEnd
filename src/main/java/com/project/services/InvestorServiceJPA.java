@@ -64,6 +64,15 @@ public class InvestorServiceJPA {
 		
 	}
 	
+	public String investorDelById(int delId) {
+		try {
+			Ir.delete(delId);
+			return "Deleted";
+		}catch(Exception e) {
+			return e.getMessage();
+		}
+	}
+	
 	public String investorUpdate(Investor Inv) {
 		Integer updateId=dao.getInvestorId(Inv.getEmail());
 		Investor updateInv=Ir.findOne(updateId);
@@ -86,6 +95,31 @@ public class InvestorServiceJPA {
 		}catch(Exception e) {
 			return e.getMessage();
 		}
+	}
+	
+	public String investorUpdateId(int updateId,Investor Inv) {
+		
+		Investor updateInv=Ir.findOne(updateId);
+		
+		if(Inv.getPassword()!=null) {
+			updateInv.setPassword(Inv.getPassword());
+		}
+		
+		if(Inv.getInvestment()!=0l) {
+			updateInv.setInvestment(Inv.getInvestment());
+		}
+		
+		if(Inv.getPhone()!=null) {
+			updateInv.setPhone(Inv.getPhone());
+		}
+		
+		try {
+			Ir.save(updateInv);
+			return "Updated";
+		}catch(Exception e) {
+			return e.getMessage();
+		}
+		
 	}
 	
 
