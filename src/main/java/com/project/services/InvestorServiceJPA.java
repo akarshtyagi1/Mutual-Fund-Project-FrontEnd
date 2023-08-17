@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.project.dao.InvestorDAO;
 import com.project.interfaces.InvestorRepository;
 import com.project.model.Investor;
 import com.project.model.LoginForm;
@@ -15,9 +14,6 @@ public class InvestorServiceJPA {
 	
 	@Autowired
 	InvestorRepository Ir;
-	
-	@Autowired
-	InvestorDAO dao;
 		
 	public ArrayList<Investor> getAllInvestors(){
 		ArrayList<Investor> allInvestors=new ArrayList();
@@ -28,7 +24,7 @@ public class InvestorServiceJPA {
 	public String investorRegister(Investor Inv) {
 		
 		
-		if(dao.checkEmail(Inv.getEmail())) {
+		if(!(Ir.findByEmail(Inv.getEmail())!=null)) {
 			try {
 				Ir.save(Inv);
 				return "registered";
@@ -44,8 +40,8 @@ public class InvestorServiceJPA {
 	
 	public String investorLogin(LoginForm loginData) {
 		
-		if(dao.checkUser(loginData.getEmail(), loginData.getPassword())) {
-			return "User Id: "+dao.getInvestorId(loginData.getEmail())+" Logged In";
+		if(Ir.findByEmailAndPassword(loginData.getEmail(), loginData.getPassword())!=null) {
+			return "User Id: "+Ir.findInvestorId(loginData.getEmail())+" Logged In";
 		}
 		
 		return "Incorrect username or passowrd";
@@ -54,7 +50,7 @@ public class InvestorServiceJPA {
 	
 	public String investorDel(LoginForm delData) {
 		
-		Integer delId=dao.getInvestorId(delData.getEmail());
+		Integer delId=Ir.findInvestorId(delData.getEmail());
 		try {
 			Ir.delete(delId);
 			return "Deleted User with ID: "+delId;
@@ -74,7 +70,8 @@ public class InvestorServiceJPA {
 	}
 	
 	public String investorUpdate(Investor Inv) {
-		Integer updateId=dao.getInvestorId(Inv.getEmail());
+
+		Integer updateId=Ir.findInvestorId(Inv.getEmail());
 		Investor updateInv=Ir.findOne(updateId);
 		
 		if(Inv.getPassword()!=null) {
